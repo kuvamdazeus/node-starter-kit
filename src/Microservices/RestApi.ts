@@ -1,6 +1,6 @@
 import { ExpressAppServer } from "../CommonHttpServer/ExpressAppServer";
 import { MongoDbConnections } from "../Database/MongoDbConnections";
-import { ApiRouter } from "./Routes/ApiRouter";
+import { ApiRouter } from "./ApiRouter";
 import { Logger } from "../Utils/Logger";
 import { ServerConfig } from "../serverConfig";
 import { GraceFullShutDown } from "../Utils/GracefullShutdown";

@@ -19,7 +19,7 @@ import {
   UserLoginOtpVerifyResponseI,
   UserRegisterDto,
   UserRegisterResponseI,
-} from "../Dto/User.dto";
+} from "./User.dto";
 import { PasswordUtil } from "../../Security/PasswordUtil";
 
 const tag = "UserController";

@@ -6,8 +6,8 @@ import {
   UpdatePasswordDto,
   UserLoginDto,
   UserRegisterDto,
-} from "../Dto/User.dto";
-import { UserController } from "../Controllers/UserController";
+} from "./User.dto";
+import { UserController } from "./UserController";
 import { JwtController } from "../../Security/JwtController";
 import { AuthTokenI, JwtTokenTypes } from "../../Security/JwtConfig";
 import { AuthorizationRole } from "../../CommonConstants";

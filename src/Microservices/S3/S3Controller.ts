@@ -5,7 +5,7 @@ import { AuthTokenI } from "../../Security/JwtConfig";
 import { Logger } from "../../Utils/Logger";
 import { S3UtilInstance } from "../../Utils/S3Util";
 import path from "path";
-import { S3FileUploadDto, S3FileUploadResponse } from "../Dto/S3.dto";
+import { S3FileUploadDto, S3FileUploadResponse } from "./S3.dto";
 import { v4 as uuidv4 } from "uuid";
 
 const tag = "S3Controller";

@@ -1,8 +1,8 @@
 import * as express from "express";
 import { validateDtoMiddleware } from "../../CommonHttpServer/RequestValidator";
 import { ResponseHandler } from "../../CommonHttpServer/ResponseHandler";
-import { AdminUserRegisterDto, AdminUserLoginDto } from "../Dto/AdminUser.dto";
-import { AdminUserController } from "../Controllers/AdminUserController";
+import { AdminUserRegisterDto, AdminUserLoginDto } from "./AdminUser.dto";
+import { AdminUserController } from "./AdminUserController";
 const router = express.Router();
 
 router.post(

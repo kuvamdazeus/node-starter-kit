@@ -1,7 +1,7 @@
 import { Transform } from "class-transformer";
 import { IsNotEmpty, IsString, IsEmail, IsNumber } from "class-validator";
 import "reflect-metadata";
-import { IsOptional2 } from "./Common.dto";
+import { IsOptional2 } from "../Common.dto";
 
 export class AdminUserLoginDto {
   @IsEmail()

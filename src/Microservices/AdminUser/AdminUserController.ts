@@ -18,7 +18,7 @@ import {
   AdminUserLoginResponseI,
   AdminUserRegisterDto,
   AdminUserRegisterResponseI,
-} from "../Dto/AdminUser.dto";
+} from "./AdminUser.dto";
 
 const tag = "AdminUserController";
 

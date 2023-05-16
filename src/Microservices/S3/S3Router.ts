@@ -1,10 +1,10 @@
 import * as express from "express";
 import { validateDtoMiddleware } from "../../CommonHttpServer/RequestValidator";
 import { ResponseHandler } from "../../CommonHttpServer/ResponseHandler";
-import { S3FileUploadDto } from "../Dto/S3.dto";
+import { S3FileUploadDto } from "./S3.dto";
 import { JwtController } from "../../Security/JwtController";
 import { JwtTokenTypes } from "../../Security/JwtConfig";
-import { S3Controller } from "../Controllers/S3Controller";
+import { S3Controller } from "./S3Controller";
 import { RequestHandler } from "../../CommonHttpServer/RequestHandler";
 const router = express.Router();
 
