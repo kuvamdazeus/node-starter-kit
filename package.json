@@ -7,7 +7,6 @@
     "build": "tsc",
     "tsc": "tsc",
     "watch": "tsnd --respawn src/index.ts user_service",
-    "watch-cron": "tsnd --respawn src/index.ts cron_service",
     "mig": "node dist/index.js migration",
     "lint:fix": "eslint --fix src",
     "test": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register -r dotenv/config 'src/**/*test.ts'",

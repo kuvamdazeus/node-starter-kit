@@ -1,43 +1,27 @@
 import * as express from "express";
 import { validateDtoMiddleware } from "../../CommonHttpServer/RequestValidator";
 import { ResponseHandler } from "../../CommonHttpServer/ResponseHandler";
-import {
-  GetUserProfileByIdDto,
-  UpdatePasswordDto,
-  UserLoginDto,
-  UserRegisterDto,
-} from "./User.dto";
-import { UserController } from "./UserController";
 import { JwtController } from "../../Security/JwtController";
 import { JwtTokenTypes } from "../../Security/JwtConfig";
 import { AuthorizationRole } from "../../CommonConstants";
-import { RequestHandler } from "../../CommonHttpServer/RequestHandler";
+import {
+  CreateCategoryDto,
+  DeleteCategoryDto,
+  GetCategoryByIdDto,
+  UpdateCategoryDto,
+} from "./Category.dto";
+import { CategoryController } from "./CategoryController";
 
 const router = express.Router();
 
-router.post(
-  "/register",
-  validateDtoMiddleware(UserRegisterDto, "body"),
+router.get(
+  "/",
   JwtController.validateTokenMiddleware(JwtTokenTypes.AUTH_TOKEN, [
     AuthorizationRole.ADMIN,
   ]),
   async (req: express.Request, res: express.Response) => {
     try {
-      const response = await UserController.registerUser(req.body);
-      ResponseHandler.sendResponse(res, response);
-    } catch (error) {
-      ResponseHandler.sendErrorResponse(res, error);
-    }
-  }
-);
-
-router.post(
-  "/login",
-  validateDtoMiddleware(UserLoginDto, "body"),
-  async (req: express.Request, res: express.Response) => {
-    try {
-      const response = await UserController.login(req.body);
-
+      const response = await CategoryController.index();
       ResponseHandler.sendResponse(res, response);
     } catch (error) {
       ResponseHandler.sendErrorResponse(res, error);
@@ -46,16 +30,15 @@ router.post(
 );
 
 router.get(
-  "/:userId",
-  validateDtoMiddleware(GetUserProfileByIdDto, "params"),
+  "/:categoryId",
+  validateDtoMiddleware(GetCategoryByIdDto, "params"),
   JwtController.validateTokenMiddleware(JwtTokenTypes.AUTH_TOKEN, [
     AuthorizationRole.ADMIN,
-    AuthorizationRole.USER,
   ]),
   async (req: express.Request, res: express.Response) => {
     try {
-      const response = await UserController.getUserProfile(
-        (req.params as any as GetUserProfileByIdDto).userId
+      const response = await CategoryController.getCategoryById(
+        (req.params as any as GetCategoryByIdDto).categoryId
       );
       ResponseHandler.sendResponse(res, response);
     } catch (error) {
@@ -64,17 +47,16 @@ router.get(
   }
 );
 
-router.put(
-  "/password",
-  validateDtoMiddleware(UpdatePasswordDto, "body"),
+router.post(
+  "/create",
+  validateDtoMiddleware(CreateCategoryDto, "body"),
   JwtController.validateTokenMiddleware(JwtTokenTypes.AUTH_TOKEN, [
-    AuthorizationRole.USER,
+    AuthorizationRole.ADMIN,
   ]),
   async (req: express.Request, res: express.Response) => {
     try {
-      const response = await UserController.updatePassword(
-        req.body,
-        RequestHandler.getJwtPayload(req)
+      const response = await CategoryController.create(
+        req.body as CreateCategoryDto
       );
       ResponseHandler.sendResponse(res, response);
     } catch (error) {
@@ -83,4 +65,37 @@ router.put(
   }
 );
 
-export { router as UserRouter };
+router.patch(
+  "/",
+  validateDtoMiddleware(UpdateCategoryDto, "body"),
+  JwtController.validateTokenMiddleware(JwtTokenTypes.AUTH_TOKEN, [
+    AuthorizationRole.ADMIN,
+  ]),
+  async (req: express.Request, res: express.Response) => {
+    try {
+      const response = await CategoryController.update(
+        req.body as UpdateCategoryDto
+      );
+      ResponseHandler.sendResponse(res, response);
+    } catch (error) {
+      ResponseHandler.sendErrorResponse(res, error);
+    }
+  }
+);
+
+router.delete(
+  "/:id",
+  validateDtoMiddleware(DeleteCategoryDto, "params"),
+  JwtController.validateTokenMiddleware(JwtTokenTypes.AUTH_TOKEN, [
+    AuthorizationRole.ADMIN,
+  ]),
+  async (req: express.Request, res: express.Response) => {
+    try {
+      const response = await CategoryController.destroy(req.params as any);
+      ResponseHandler.sendResponse(res, response);
+    } catch (error) {
+      ResponseHandler.sendErrorResponse(res, error);
+    }
+  }
+);
+export { router as CategoryRouter };
