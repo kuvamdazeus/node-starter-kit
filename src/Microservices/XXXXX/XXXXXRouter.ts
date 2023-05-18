@@ -98,4 +98,4 @@ router.delete(
     }
   }
 );
-export { router as CategoryRouter };
+export { router as XXXXXRouter };
