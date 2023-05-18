@@ -30,7 +30,7 @@ export class DeleteXXXXXDto {
 export class GetXXXXXByIdDto {
   @IsMongoId()
   @IsNotEmpty()
-  xxxxxId!: string;
+  entityId!: string;
 }
 
 export interface XXXXXI {

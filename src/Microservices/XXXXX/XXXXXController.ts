@@ -9,19 +9,19 @@ import {
   UpdateXXXXXDto,
 } from "./XXXXX.dto";
 import {
-  CategoryModel,
+  XXXXXModel,
   IXXXXXEntity,
 } from "@/Database/Entities/XXXXXEntity";
 
 const tag = "XXXXController";
 
-export const CategoryController = {
+export const XXXXXController = {
   async index(): Promise<ApiResponseI> {
     try {
-      const categoryList = await CategoryModel().find().sort({ orderNo: 1 });
+      const entityList = await XXXXXModel().find().sort({ orderNo: 1 });
 
-      const data: XXXXXI[] = categoryList.map((category) =>
-        this.getCategoryResponseDto(category)
+      const data: XXXXXI[] = entityList.map((entity) =>
+        this.getEntityResponseDto(entity)
       );
 
       return {
@@ -40,7 +40,7 @@ export const CategoryController = {
       const { name, description, image } = input;
 
       const existingCategoryWithSameName: IXXXXXEntity | null =
-        await CategoryModel().findOne({
+        await XXXXXModel().findOne({
           name,
         });
 
@@ -51,7 +51,7 @@ export const CategoryController = {
         };
       }
 
-      const newCategory = new (CategoryModel())({
+      const newCategory = new (XXXXXModel())({
         name,
         image,
         description,
@@ -73,9 +73,9 @@ export const CategoryController = {
     try {
       const { id, name, description, image } = input;
 
-      const category = await CategoryModel().findById(id);
+      const entity = await XXXXXModel().findById(id);
 
-      if (!category) {
+      if (!entity) {
         return {
           status: HttpStatusCodes.NOT_FOUND,
           message: "No Such Category Found",
@@ -83,7 +83,7 @@ export const CategoryController = {
       }
 
       const existingCategoryWithSameName: IXXXXXEntity | null =
-        await CategoryModel().findOne({
+        await XXXXXModel().findOne({
           name,
           _id: { $ne: id },
         });
@@ -95,7 +95,7 @@ export const CategoryController = {
         };
       }
 
-      const updatedCategory = await CategoryModel().findOneAndUpdate(
+      const updatedCategory = await XXXXXModel().findOneAndUpdate(
         { _id: id },
         {
           name,
@@ -111,7 +111,7 @@ export const CategoryController = {
         };
       }
 
-      const data: XXXXXI = this.getCategoryResponseDto(updatedCategory);
+      const data: XXXXXI = this.getEntityResponseDto(updatedCategory);
 
       Logger.info({
         message: "Category Updated Successfully",
@@ -121,7 +121,7 @@ export const CategoryController = {
 
       return {
         status: HttpStatusCodes.OK,
-        message: "category Updated",
+        message: "entity Updated",
       };
     } catch (error) {
       Logger.warn({ message: "Category update Failed", error, tag });
@@ -133,14 +133,14 @@ export const CategoryController = {
     try {
       const { id } = input;
 
-      const mapping = await CategoryModel().findOneAndDelete({
+      const mapping = await XXXXXModel().findOneAndDelete({
         _id: id,
       });
 
       if (!mapping) {
         return {
           status: HttpStatusCodes.NOT_FOUND,
-          message: "This category doesn't exist",
+          message: "This entity doesn't exist",
         };
       }
 
@@ -155,17 +155,17 @@ export const CategoryController = {
     }
   },
 
-  async getCategoryById(categoryId: string): Promise<ApiResponseI> {
-    const category = await CategoryModel().findOne({ _id: categoryId });
+  async getEntityById(entityId: string): Promise<ApiResponseI> {
+    const entity = await XXXXXModel().findOne({ _id: entityId });
 
-    if (!category) {
+    if (!entity) {
       return {
         status: HttpStatusCodes.NOT_FOUND,
         message: "Not Found",
       };
     }
 
-    const data: XXXXXI = this.getCategoryResponseDto(category);
+    const data: XXXXXI = this.getEntityResponseDto(entity);
 
     return {
       status: HttpStatusCodes.OK,
@@ -174,12 +174,12 @@ export const CategoryController = {
     };
   },
 
-  getCategoryResponseDto(category: IXXXXXEntity): XXXXXI {
+  getEntityResponseDto(entity: IXXXXXEntity): XXXXXI {
     return {
-      id: category._id.toString(),
-      name: category.name,
-      description: category.description,
-      image: category.image,
+      id: entity._id.toString(),
+      name: entity.name,
+      description: entity.description,
+      image: entity.image,
     };
   },
 };

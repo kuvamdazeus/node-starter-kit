@@ -10,7 +10,7 @@ import {
   GetXXXXXByIdDto,
   UpdateXXXXXDto,
 } from "./XXXXX.dto";
-import { CategoryController } from "./XXXXXController";
+import { XXXXXController } from "./XXXXXController";
 
 const router = express.Router();
 
@@ -21,7 +21,7 @@ router.get(
   ]),
   async (req: express.Request, res: express.Response) => {
     try {
-      const response = await CategoryController.index();
+      const response = await XXXXXController.index();
       ResponseHandler.sendResponse(res, response);
     } catch (error) {
       ResponseHandler.sendErrorResponse(res, error);
@@ -30,15 +30,15 @@ router.get(
 );
 
 router.get(
-  "/:categoryId",
+  "/:entityId",
   validateDtoMiddleware(GetXXXXXByIdDto, "params"),
   JwtController.validateTokenMiddleware(JwtTokenTypes.AUTH_TOKEN, [
     AuthorizationRole.ADMIN,
   ]),
   async (req: express.Request, res: express.Response) => {
     try {
-      const response = await CategoryController.getCategoryById(
-        (req.params as any as GetXXXXXByIdDto).xxxxxId
+      const response = await XXXXXController.getEntityById(
+        (req.params as any as GetXXXXXByIdDto).entityId
       );
       ResponseHandler.sendResponse(res, response);
     } catch (error) {
@@ -55,7 +55,7 @@ router.post(
   ]),
   async (req: express.Request, res: express.Response) => {
     try {
-      const response = await CategoryController.create(
+      const response = await XXXXXController.create(
         req.body as CreateXXXXXDto
       );
       ResponseHandler.sendResponse(res, response);
@@ -73,7 +73,7 @@ router.patch(
   ]),
   async (req: express.Request, res: express.Response) => {
     try {
-      const response = await CategoryController.update(
+      const response = await XXXXXController.update(
         req.body as UpdateXXXXXDto
       );
       ResponseHandler.sendResponse(res, response);
@@ -91,7 +91,7 @@ router.delete(
   ]),
   async (req: express.Request, res: express.Response) => {
     try {
-      const response = await CategoryController.destroy(req.params as any);
+      const response = await XXXXXController.destroy(req.params as any);
       ResponseHandler.sendResponse(res, response);
     } catch (error) {
       ResponseHandler.sendErrorResponse(res, error);

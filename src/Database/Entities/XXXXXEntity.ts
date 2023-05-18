@@ -25,7 +25,7 @@ MongoUtils.runValidatorForSchema(XXXXXSchema);
 
 let model: Model<IXXXXXEntity> | undefined;
 
-export const CategoryModel = (): Model<IXXXXXEntity> => {
+export const XXXXXModel = (): Model<IXXXXXEntity> => {
   if (!model) {
     model = MongoDbConnections.OaktreeApps.getConnection().model(
       CollectionNames.XXXXXCollection,
