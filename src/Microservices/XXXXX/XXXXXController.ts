@@ -169,9 +169,7 @@ export const XXXXXController = {
   getEntityResponseDto(entity: IXXXXXEntity): XXXXXI {
     return {
       id: entity._id.toString(),
-      name: entity.name,
-      description: entity.description,
-      image: entity.image,
+      /*ENTITY_FIELDS*/
     };
   },
 

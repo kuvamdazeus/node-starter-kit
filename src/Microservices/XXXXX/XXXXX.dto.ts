@@ -3,9 +3,7 @@ import "reflect-metadata";
 import {z} from 'zod'
 
 export const createXXXXXDto = z.object({
-  name: z.string().nonempty(),
-  description: z.string().nonempty(),
-  image: z.string().optional(),
+  /*ZOD_FIELDS*/
 })
 
 export const updateXXXXXDto = createXXXXXDto.extend({
@@ -21,10 +19,7 @@ export const getXXXXXByIdDto = z.object({
 })
 
 export interface XXXXXI {
-  id: string;
-  name: string;
-  description: string;
-  image?: string;
+  /*INTERFACE_FIELDS*/
 }
 
 export type CreateXXXXXDto = z.infer<typeof createXXXXXDto>

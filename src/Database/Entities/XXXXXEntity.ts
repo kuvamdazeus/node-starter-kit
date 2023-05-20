@@ -4,16 +4,12 @@ import { CollectionNames } from "../CollectionNames";
 import { MongoTimestampI, MongoUtils } from "../MongoUtils";
 
 export interface IXXXXXEntity extends Document, MongoTimestampI {
-  name: string;
-  description: string;
-  image: string;
+  /*INTERFACE_FIELDS*/
 }
 
 export const XXXXXSchema: Schema = new Schema<IXXXXXEntity>(
   {
-    name: { type: String, required: true },
-    description: { type: String, required: true },
-    image: { type: String, required: false },
+    /*SCHEMA_FIELDS*/
   },
   {
     timestamps: true,
