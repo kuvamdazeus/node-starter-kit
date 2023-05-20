@@ -26,95 +26,87 @@ export const XXXXXController = {
 
       return {
         status: HttpStatusCodes.OK,
-        message: "Category List",
+        message: "Entity List",
         data,
       };
     } catch (error) {
-      Logger.warn({ message: "Category List", error, tag });
+      Logger.warn({ message: "Entity List", error, tag });
       throw error;
     }
   },
 
   async create(input: CreateXXXXXDto): Promise<ApiResponseI> {
     try {
-      const { name, description, image } = input;
+      const { name } = input;
 
-      const existingCategoryWithSameName: IXXXXXEntity | null =
+      const existingCreateEntity: IXXXXXEntity | null =
         await XXXXXModel().findOne({
           name,
         });
 
-      if (existingCategoryWithSameName) {
+      if (existingCreateEntity) {
         return {
           status: HttpStatusCodes.BAD_REQUEST,
-          message: "Category with this name already exists",
+          message: "Entity with this name already exists",
         };
       }
 
-      const newCategory = new (XXXXXModel())({
-        name,
-        image,
-        description,
-      });
+      const newEntity = new (XXXXXModel())({ ...input });
 
-      await newCategory.save();
+      await newEntity.save();
 
       return {
         status: HttpStatusCodes.OK,
-        message: "Category Created successfully",
+        message: "Entity Created successfully",
       };
     } catch (error) {
-      Logger.warn({ message: "Create Category", error, tag });
+      Logger.warn({ message: "Create Entity", error, tag });
       throw error;
     }
   },
 
   async update(input: UpdateXXXXXDto): Promise<ApiResponseI> {
     try {
-      const { id, name, description, image } = input;
+      const { id, name } = input;
 
       const entity = await XXXXXModel().findById(id);
 
       if (!entity) {
         return {
           status: HttpStatusCodes.NOT_FOUND,
-          message: "No Such Category Found",
+          message: "No Such Entity Found",
         };
       }
 
-      const existingCategoryWithSameName: IXXXXXEntity | null =
+      const existingUpdateEntity: IXXXXXEntity | null =
         await XXXXXModel().findOne({
           name,
           _id: { $ne: id },
         });
 
-      if (existingCategoryWithSameName) {
+      if (existingUpdateEntity) {
         return {
           status: HttpStatusCodes.BAD_REQUEST,
-          message: "Category with this name already exists",
+          message: "Entity with this name already exists",
         };
       }
 
-      const updatedCategory = await XXXXXModel().findOneAndUpdate(
+      const updatedEntity = await XXXXXModel().findOneAndUpdate(
         { _id: id },
-        {
-          name,
-          image,
-          description,
-        }
+        { ...this.getEntityWithoutId(entity) }
       );
 
-      if (!updatedCategory) {
+      if (!updatedEntity) {
         return {
           status: HttpStatusCodes.NOT_FOUND,
           message: "Not Found",
         };
       }
 
-      const data: XXXXXI = this.getEntityResponseDto(updatedCategory);
+      const data: XXXXXI = this.getEntityResponseDto(updatedEntity);
 
       Logger.info({
-        message: "Category Updated Successfully",
+        message: "Entity Updated Successfully",
         data,
         tag,
       });
@@ -124,7 +116,7 @@ export const XXXXXController = {
         message: "entity Updated",
       };
     } catch (error) {
-      Logger.warn({ message: "Category update Failed", error, tag });
+      Logger.warn({ message: "Entity update Failed", error, tag });
       throw error;
     }
   },
@@ -144,13 +136,13 @@ export const XXXXXController = {
         };
       }
 
-      Logger.info({ message: "Category Deleted", data: { id }, tag });
+      Logger.info({ message: "Entity Deleted", data: { id }, tag });
       return {
         status: HttpStatusCodes.OK,
-        message: "Category Deleted",
+        message: "Entity Deleted",
       };
     } catch (error) {
-      Logger.warn({ message: "DeleteCategory Failed", error, tag });
+      Logger.warn({ message: "DeleteEntity Failed", error, tag });
       throw error;
     }
   },
@@ -169,7 +161,7 @@ export const XXXXXController = {
 
     return {
       status: HttpStatusCodes.OK,
-      message: "Category Data",
+      message: "Entity Data",
       data,
     };
   },
@@ -182,4 +174,10 @@ export const XXXXXController = {
       image: entity.image,
     };
   },
+
+  getEntityWithoutId(entity: IXXXXXEntity): CreateXXXXXDto {
+    const data = this.getEntityResponseDto(entity);
+    const { id, ...rest } = data;
+    return rest;
+  }
 };

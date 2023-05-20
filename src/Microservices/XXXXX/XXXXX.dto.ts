@@ -1,37 +1,24 @@
 import { IsNotEmpty, IsString, IsMongoId, IsOptional } from "class-validator";
 import "reflect-metadata";
+import {z} from 'zod'
 
-export class CreateXXXXXDto {
-  @IsString()
-  @IsNotEmpty()
-  name!: string;
+export const createXXXXXDto = z.object({
+  name: z.string().nonempty(),
+  description: z.string().nonempty(),
+  image: z.string().optional(),
+})
 
-  @IsString()
-  @IsNotEmpty()
-  description!: string;
+export const updateXXXXXDto = createXXXXXDto.extend({
+  id: z.string().nonempty(),
+})
 
-  @IsString()
-  @IsOptional()
-  image?: string;
-}
+export const deleteXXXXXDto = z.object({
+  id: z.string().nonempty(),
+})
 
-export class UpdateXXXXXDto extends CreateXXXXXDto {
-  @IsMongoId()
-  @IsNotEmpty()
-  id!: string;
-}
-
-export class DeleteXXXXXDto {
-  @IsMongoId()
-  @IsNotEmpty()
-  id!: string;
-}
-
-export class GetXXXXXByIdDto {
-  @IsMongoId()
-  @IsNotEmpty()
-  entityId!: string;
-}
+export const getXXXXXByIdDto = z.object({
+  entityId: z.string().nonempty(),
+})
 
 export interface XXXXXI {
   id: string;
@@ -39,3 +26,8 @@ export interface XXXXXI {
   description: string;
   image?: string;
 }
+
+export type CreateXXXXXDto = z.infer<typeof createXXXXXDto>
+export type UpdateXXXXXDto = z.infer<typeof updateXXXXXDto>
+export type DeleteXXXXXDto = z.infer<typeof deleteXXXXXDto>
+export type GetXXXXXByIdDto = z.infer<typeof getXXXXXByIdDto>

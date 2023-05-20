@@ -5,8 +5,27 @@ import { validate } from "class-validator";
 import { RequestHandler } from "./RequestHandler";
 import { Logger } from "../Utils/Logger";
 import { HttpStatusCodes } from "../CommonConstants";
+import { ZodSchema } from "zod";
 
 const tag = "RequestValidator";
+
+const validateUsingClassValidator = async (dto: any, input: any) => {
+  const obj: any = plainToClass(dto, input);
+  const validationErrors = await validate(obj, {});
+  const isFailed = validationErrors.length > 0;
+
+  return { obj, isFailed, validationErrors };
+}
+
+const validateUsingZodSchema = (dto: ZodSchema, input: any) => {
+  const parseRes = dto.safeParse(input)
+
+  if (parseRes.success) {
+    return { obj: parseRes.data, isFailed: false, validationErrors: [] }
+  }
+
+  return { obj: {}, isFailed: true, validationErrors: parseRes.error.issues }
+}
 
 /**
  *
@@ -17,7 +36,8 @@ const tag = "RequestValidator";
  */
 export const validateDtoMiddleware = function (
   dto: any,
-  propertyToValidate: "body" | "query" | "params"
+  propertyToValidate: "body" | "query" | "params",
+  using: "class-validator" | "zod" = "class-validator"
 ) {
   return async (
     req: express.Request,
@@ -37,9 +57,23 @@ export const validateDtoMiddleware = function (
         break;
     }
 
-    const obj: any = plainToClass(dto, input);
-    const validationErrors = await validate(obj, {});
-    const isFailed = validationErrors.length > 0;
+    let isFailed = false
+    let obj: any = {}
+    let validationErrors: any = []
+
+    if (using === "class-validator") {
+      const response = await validateUsingClassValidator(dto, input)
+      
+      obj = response.obj
+      isFailed = response.isFailed
+      validationErrors = response.validationErrors
+    } else {
+      const response = validateUsingZodSchema(dto, input)
+
+      obj = response.obj
+      isFailed = response.isFailed
+      validationErrors = response.validationErrors
+    }
 
     Logger.info({ message: "Request Input", data: { obj }, tag });
     if (isFailed) {

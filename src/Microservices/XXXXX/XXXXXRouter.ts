@@ -6,9 +6,12 @@ import { JwtTokenTypes } from "../../Security/JwtConfig";
 import { AuthorizationRole } from "../../CommonConstants";
 import {
   CreateXXXXXDto,
-  DeleteXXXXXDto,
   GetXXXXXByIdDto,
   UpdateXXXXXDto,
+  createXXXXXDto,
+  deleteXXXXXDto,
+  getXXXXXByIdDto,
+  updateXXXXXDto,
 } from "./XXXXX.dto";
 import { XXXXXController } from "./XXXXXController";
 
@@ -31,7 +34,7 @@ router.get(
 
 router.get(
   "/:entityId",
-  validateDtoMiddleware(GetXXXXXByIdDto, "params"),
+  validateDtoMiddleware(getXXXXXByIdDto, "params", "zod"),
   JwtController.validateTokenMiddleware(JwtTokenTypes.AUTH_TOKEN, [
     AuthorizationRole.ADMIN,
   ]),
@@ -49,7 +52,7 @@ router.get(
 
 router.post(
   "/create",
-  validateDtoMiddleware(CreateXXXXXDto, "body"),
+  validateDtoMiddleware(createXXXXXDto, "body", "zod"),
   JwtController.validateTokenMiddleware(JwtTokenTypes.AUTH_TOKEN, [
     AuthorizationRole.ADMIN,
   ]),
@@ -67,7 +70,7 @@ router.post(
 
 router.patch(
   "/",
-  validateDtoMiddleware(UpdateXXXXXDto, "body"),
+  validateDtoMiddleware(updateXXXXXDto, "body", "zod"),
   JwtController.validateTokenMiddleware(JwtTokenTypes.AUTH_TOKEN, [
     AuthorizationRole.ADMIN,
   ]),
@@ -85,7 +88,7 @@ router.patch(
 
 router.delete(
   "/:id",
-  validateDtoMiddleware(DeleteXXXXXDto, "params"),
+  validateDtoMiddleware(deleteXXXXXDto, "params", "zod"),
   JwtController.validateTokenMiddleware(JwtTokenTypes.AUTH_TOKEN, [
     AuthorizationRole.ADMIN,
   ]),
