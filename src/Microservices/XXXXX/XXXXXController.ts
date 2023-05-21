@@ -37,19 +37,7 @@ export const XXXXXController = {
 
   async create(input: CreateXXXXXDto): Promise<ApiResponseI> {
     try {
-      const { name } = input;
-
-      const existingCreateEntity: IXXXXXEntity | null =
-        await XXXXXModel().findOne({
-          name,
-        });
-
-      if (existingCreateEntity) {
-        return {
-          status: HttpStatusCodes.BAD_REQUEST,
-          message: "Entity with this name already exists",
-        };
-      }
+      /*CHECK_EXISTING_CREATE_ENTITY*/
 
       const newEntity = new (XXXXXModel())({ ...input });
 
@@ -67,7 +55,7 @@ export const XXXXXController = {
 
   async update(input: UpdateXXXXXDto): Promise<ApiResponseI> {
     try {
-      const { id, name } = input;
+      const { id, /*UNIQUE_FIELD*/ } = input;
 
       const entity = await XXXXXModel().findById(id);
 
@@ -78,18 +66,7 @@ export const XXXXXController = {
         };
       }
 
-      const existingUpdateEntity: IXXXXXEntity | null =
-        await XXXXXModel().findOne({
-          name,
-          _id: { $ne: id },
-        });
-
-      if (existingUpdateEntity) {
-        return {
-          status: HttpStatusCodes.BAD_REQUEST,
-          message: "Entity with this name already exists",
-        };
-      }
+      /*CHECK_EXISTING_UPDATE_ENTITY*/
 
       const updatedEntity = await XXXXXModel().findOneAndUpdate(
         { _id: id },
