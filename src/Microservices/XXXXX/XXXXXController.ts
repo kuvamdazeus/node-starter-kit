@@ -55,7 +55,7 @@ export const XXXXXController = {
 
   async update(input: UpdateXXXXXDto): Promise<ApiResponseI> {
     try {
-      const { id, /*UNIQUE_FIELD*/ } = input;
+      const { id, /*UNIQUE_FIELDS*/ } = input;
 
       const entity = await XXXXXModel().findById(id);
 
