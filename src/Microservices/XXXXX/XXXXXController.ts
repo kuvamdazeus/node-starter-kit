@@ -13,7 +13,7 @@ import {
   IXXXXXEntity,
 } from "@/Database/Entities/XXXXXEntity";
 
-const tag = "XXXXController";
+const tag = "XXXXXController";
 
 export const XXXXXController = {
   async index(): Promise<ApiResponseI> {
