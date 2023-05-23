@@ -13,6 +13,7 @@ import {
 import { CategoryController } from "./CategoryController";
 
 const router = express.Router();
+router.use(express.json())
 
 router.get(
   "/",

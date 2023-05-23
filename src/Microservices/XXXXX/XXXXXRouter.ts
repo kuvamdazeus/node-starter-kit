@@ -16,6 +16,7 @@ import {
 import { XXXXXController } from "./XXXXXController";
 
 const router = express.Router();
+router.use(express.json())
 
 router.get(
   "/",

@@ -14,6 +14,7 @@ import { AuthorizationRole } from "../../CommonConstants";
 import { RequestHandler } from "../../CommonHttpServer/RequestHandler";
 
 const router = express.Router();
+router.use(express.json())
 
 router.post(
   "/register",

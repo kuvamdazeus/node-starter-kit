@@ -77,8 +77,7 @@ export const AdminUserController = {
         };
       }
 
-      const isValid = true;
-      await PasswordUtil.checkHash({
+      const isValid = await PasswordUtil.checkHash({
         password,
         hashBase64: user.passwordHash,
       });

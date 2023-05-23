@@ -4,6 +4,7 @@ import { ResponseHandler } from "../../CommonHttpServer/ResponseHandler";
 import { AdminUserRegisterDto, AdminUserLoginDto } from "./AdminUser.dto";
 import { AdminUserController } from "./AdminUserController";
 const router = express.Router();
+router.use(express.json())
 
 router.post(
   "/register",

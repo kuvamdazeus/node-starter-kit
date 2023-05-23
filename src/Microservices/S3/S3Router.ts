@@ -7,6 +7,7 @@ import { JwtTokenTypes } from "../../Security/JwtConfig";
 import { S3Controller } from "./S3Controller";
 import { RequestHandler } from "../../CommonHttpServer/RequestHandler";
 const router = express.Router();
+router.use(express.json())
 
 router.post(
   "/signedUrl",
