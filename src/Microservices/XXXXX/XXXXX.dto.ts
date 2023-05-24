@@ -19,6 +19,7 @@ export const getXXXXXByIdDto = z.object({
 })
 
 export interface XXXXXI {
+  id: string;
   /*INTERFACE_FIELDS*/
 }
 
