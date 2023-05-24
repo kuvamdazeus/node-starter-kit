@@ -11,7 +11,7 @@ import {
 import {
   XXXXXModel,
   IXXXXXEntity,
-} from "@/Database/Entities/XXXXXEntity";
+} from "../../Database/Entities/XXXXXEntity";;
 
 const tag = "XXXXXController";
 
