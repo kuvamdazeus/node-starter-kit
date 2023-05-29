@@ -70,7 +70,7 @@ export const XXXXXController = {
 
       const updatedEntity = await XXXXXModel().findOneAndUpdate(
         { _id: id },
-        { ...this.getEntityWithoutId(input) }
+        { ...this.getEntityWithoutId(input as any) }
       );
 
       if (!updatedEntity) {
