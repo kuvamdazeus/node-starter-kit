@@ -9,6 +9,7 @@ import {
   GetXXXXXByIdDto,
   UpdateXXXXXDto,
   createXXXXXDto,
+  deleteManyXXXXXDto,
   deleteXXXXXDto,
   getXXXXXByIdDto,
   updateXXXXXDto,
@@ -96,6 +97,22 @@ router.delete(
   async (req: express.Request, res: express.Response) => {
     try {
       const response = await XXXXXController.destroy(req.params as any);
+      ResponseHandler.sendResponse(res, response);
+    } catch (error) {
+      ResponseHandler.sendErrorResponse(res, error);
+    }
+  }
+);
+
+router.post(
+  "/delete",
+  validateDtoMiddleware(deleteManyXXXXXDto, "body", "zod"),
+  JwtController.validateTokenMiddleware(JwtTokenTypes.AUTH_TOKEN, [
+    AuthorizationRole.ADMIN,
+  ]),
+  async (req: express.Request, res: express.Response) => {
+    try {
+      const response = await XXXXXController.destroyMany(req.body as any);
       ResponseHandler.sendResponse(res, response);
     } catch (error) {
       ResponseHandler.sendErrorResponse(res, error);

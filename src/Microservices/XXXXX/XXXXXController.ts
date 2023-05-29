@@ -7,6 +7,7 @@ import {
   CreateXXXXXDto,
   DeleteXXXXXDto,
   UpdateXXXXXDto,
+  DeleteManyXXXXXDto,
 } from "./XXXXX.dto";
 import {
   XXXXXModel,
@@ -97,6 +98,32 @@ export const XXXXXController = {
       throw error;
     }
   },
+
+  async destroyMany(input: DeleteManyXXXXXDto): Promise<ApiResponseI> {
+    try {
+      const { ids } = input;
+
+      const mapping = await XXXXXModel().deleteMany({
+        _id: { $in: ids }
+      })
+
+      if (!mapping || mapping.deletedCount === 0) {
+        return {
+          status: HttpStatusCodes.NOT_FOUND,
+          message: "This entity doesn't exist",
+        };
+      }
+
+      Logger.info({ message: `${mapping.deletedCount} entities Deleted`, data: { ids }, tag });
+      return {
+        status: HttpStatusCodes.OK,
+        message: "Entity Deleted",
+      };
+    } catch (error) {
+      Logger.warn({ message: "DeleteEntity Failed", error, tag });
+      throw error;
+    }
+  }
 
   async destroy(input: DeleteXXXXXDto): Promise<ApiResponseI> {
     try {

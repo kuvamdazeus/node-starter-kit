@@ -14,6 +14,10 @@ export const deleteXXXXXDto = z.object({
   id: z.string().nonempty(),
 })
 
+export const deleteManyXXXXXDto = z.object({
+  ids: z.array(z.string().nonempty()),
+})
+
 export const getXXXXXByIdDto = z.object({
   entityId: z.string().nonempty(),
 })
@@ -26,4 +30,5 @@ export interface XXXXXI {
 export type CreateXXXXXDto = z.infer<typeof createXXXXXDto>
 export type UpdateXXXXXDto = z.infer<typeof updateXXXXXDto>
 export type DeleteXXXXXDto = z.infer<typeof deleteXXXXXDto>
+export type DeleteManyXXXXXDto = z.infer<typeof deleteManyXXXXXDto>
 export type GetXXXXXByIdDto = z.infer<typeof getXXXXXByIdDto>
