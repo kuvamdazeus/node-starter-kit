@@ -123,7 +123,7 @@ export const XXXXXController = {
       Logger.warn({ message: "DeleteEntity Failed", error, tag });
       throw error;
     }
-  }
+  },
 
   async destroy(input: DeleteXXXXXDto): Promise<ApiResponseI> {
     try {
