@@ -145,7 +145,7 @@ export const XXXXXController = {
 
   getEntityResponseDto(entity: IXXXXXEntity): XXXXXI {
     return {
-      id: entity._id.toString(),
+      id: entity?._id?.toString?.(),
       /*ENTITY_FIELDS*/
     };
   },
